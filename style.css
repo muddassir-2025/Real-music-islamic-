@@ -431,7 +431,7 @@
         /* or 100% or smaller like 300px */
         height: 60px;
         /* optional: adjust height if needed */
-        font-size: x-small;
+        font-size: medium;
 
     }
 .fcard{
@@ -526,6 +526,7 @@
     z-index: 10000 !important;}
 
 }
+
 
 
 
