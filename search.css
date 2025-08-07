@@ -1,0 +1,352 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: cursive;
+}
+
+.search-container {
+    position: relative;
+    width: 900px;
+    height: 100px;
+    margin-left: 300px;
+
+}
+
+#searchInput {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 50px;
+    background-color: transparent;
+    border: 1px solid #ccc;
+    /* Optional: change or remove border */
+    color: white;
+    /* Or any color you want for text */
+    outline: none;
+    font-size: 16px;
+}
+
+.dropdown {
+    position: absolute;
+    background-color: gray;
+    border: 2px solid #2d2c2c;
+    width: 100%;
+    max-height: 150px;
+    overflow-y: auto;
+    display: none;
+    z-index: 10;
+}
+
+.dropdown div {
+    padding: 10px;
+    cursor: pointer;
+    border: 1px solid #2d2c2c;
+}
+
+.dropdown div:hover {
+    background-color: #676565;
+}
+
+.cards-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+    align-items: center;
+}
+
+.scard {
+    background: white;
+    padding: 15px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    width: 300px;
+    display: none;
+    text-align: center;
+}
+
+.scard.show {
+    display: block;
+}
+
+.controls {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.play-btn {
+    font-size: 24px;
+    color: #007bff;
+    cursor: pointer;
+}
+
+.play-btn.playing {
+    color: green;
+}
+
+
+.global-player {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 800px;
+    /* Reduce this to control player width */
+    background: transparent;
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: transparent;
+    z-index: 1000;
+}
+
+/* Range (slider) */
+.global-player input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    /* Now it fills remaining space inside .global-player */
+    height: 12px;
+    background: #ddd;
+    border-radius: 6px;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    margin-bottom: 40px;
+}
+
+/* WebKit track (rectangle) */
+.global-player input[type="range"]::-webkit-slider-runnable-track {
+    height: 32px;
+    background: rgb(186, 83, 101);
+    border-radius: 6px;
+}
+
+/* WebKit thumb (ball) */
+.global-player input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 20px;
+    width: 20px;
+    background: white;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    margin-top: 6px;
+    /* Align center inside 32px track */
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+    margin-left: 10px;
+}
+
+/* Time text */
+.global-player .time {
+    width: 50px;
+    text-align: right;
+    font-size: 14px;
+    margin-bottom: 40px;
+}
+
+
+
+
+.scard {
+    width: 850px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 10px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: #2b2a2a;
+    padding: 2px;
+    position: relative;
+}
+
+
+.time {
+    width: 25px;
+    height: 27px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 10px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: pink;
+    padding: 2px;
+    color: black;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: small;
+   
+}
+
+
+.scard:hover {
+    background-color: rgb(241, 212, 217, 0.9);
+    /* light frosted glass effect */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* for Safari support */
+    box-shadow: 0 0 15px 4px rgba(30, 159, 229, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+
+.play-btn {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+    /* ensure it's above other content */
+    margin: -5px;
+}
+
+
+
+.ccard {
+    width: 150px;
+    height: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: #2b2a2a;
+    padding: 2px;
+    margin-left: 100px;
+    position: relative;
+    margin-bottom: -50px;
+
+}
+
+.ccard:hover {
+    background-color: rgba(220, 246, 51, 0.9);
+    /* light frosted glass effect */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* for Safari support */
+    box-shadow: 0 0 15px 4px rgba(30, 159, 229, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+
+
+@media only screen and (max-width: 768px) {
+  /* Slide-in sidebar */
+  .left {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 70vw;
+    height: 100vh;
+    transform: translateX(-100%);
+    z-index: 9999;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .left.active {
+    transform: translateX(0);
+  }
+
+  .right {
+    width: 100vw;
+    padding: 10px;
+  }
+
+  /* Search bar resizing */
+  .search-container {
+    width: 70vw;
+    margin-left:47px;
+    height: auto;
+    
+  }
+
+  #searchInput {
+    font-size: 14px;
+    height: 40px;
+  }
+
+  /* Dropdown full-width */
+  .dropdown {
+    width: 90vw;
+    font-size: 14px;
+    max-height: 130px;
+  }
+
+  .dropdown div {
+    padding: 8px;
+  }
+
+  /* Cards smaller for mobile */
+  .scard {
+    width: 80vw;
+    height: auto;
+    padding: 10px;
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .scard:hover {
+    box-shadow: none; /* Optional: remove hover effects on mobile */
+  }
+
+  /* Play button repositioning if needed */
+  .play-btn {
+    right: 10px;
+    bottom: 10px;
+    font-size: 20px;
+  }
+
+  /* Global player responsiveness */
+ 
+
+  /* Small action card */
+  .ccard {
+    width: 100px;
+    height: 40px;
+    font-size: 12px;
+    margin-left: 150px;
+    margin-bottom: 10px;
+  }
+
+  .time {
+    font-size: 12px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .global-player{
+    width: 400px;
+    background-color: black;
+    padding: 10px;
+  }
+
+/* Range (slider) */
+.global-player input[type="range"] {
+    margin-bottom: 4px;
+}
+.global-player .time {
+    margin-bottom: 4px;
+}
+
+.cards-container{
+  margin: 50px;
+}
+
+
+}
+

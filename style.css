@@ -1,0 +1,524 @@
+.left {
+    width: 25vw;
+    height: 25vh;
+    background-color: rgb(28, 27, 27);
+    color: white;
+
+}
+
+.right {
+    width: 75vw;
+    max-height: 96vh;
+    background-color: rgb(28, 27, 27);
+    color: white;
+    position: relative;
+    overflow: hidden;
+}
+
+.home {
+    height: 25vh;
+
+
+}
+
+.library {
+    height: 70vh;
+    background-color: rgb(28, 27, 27);
+    overflow-y: scroll;
+    display: flex;
+    gap: 0px;
+    flex-wrap: wrap;
+    flex-direction: row;
+    overflow: hidden;
+
+}
+
+
+.cardcontainer {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin: 30px;
+    overflow-y: scroll;
+    max-height: 75vh;
+
+
+
+}
+
+.card {
+    width: 200px;
+    height: 250px;
+    padding: 5px;
+    margin: 8px;
+    box-sizing: border-box;
+    background-color: #000;
+    /* Optional black background */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 8px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    margin-bottom: 10px;
+    margin-left: 30px;
+}
+
+.card:hover {
+    box-shadow: 0 0 10px 2px rgb(30, 159, 229);
+}
+
+.card img {
+    width: 100%;
+    height: 150px;
+    /* Set a portion for image */
+    object-fit: cover;
+    /* or 'contain' if you want to avoid cropping */
+
+}
+
+.card p {
+    margin-top: 0px;
+    text-align: center;
+    font-size: 14px;
+}
+
+
+.scard {
+    width: 850px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 10px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: #2b2a2a;
+    padding: 2px;
+    position: relative;
+    text-overflow: ellipsis;
+}
+
+.fcard {
+    width: 300px;
+    height: 65px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 10px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: rgb(60, 57, 57);
+    position: relative;
+    gap: 12px;
+    padding-bottom: 5px;
+    padding-left: 25px;
+    padding-right: 30px;
+    margin-top: 10px;
+    border: 1px solid white;
+    text-overflow: ellipsis;
+
+}
+
+
+
+
+.ccard {
+    width: 150px;
+    height: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: #2b2a2a;
+    padding: 2px;
+    margin-left: 100px;
+    position: relative;
+
+}
+
+.ccard:hover {
+    background-color: rgba(220, 246, 51, 0.9);
+    /* light frosted glass effect */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* for Safari support */
+    box-shadow: 0 0 15px 4px rgba(30, 159, 229, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.number {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 10px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: #2b2a2a;
+    padding: 2px;
+}
+
+.time {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 10px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: #2b2a2a;
+    padding: 2px;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: small;
+}
+
+.btn {
+
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: #2b2a2a;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: small;
+    margin: 20px;
+    margin-left: 100px;
+    margin-right: -70px;
+}
+
+
+
+
+.heart {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    border-radius: 10px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: #2b2a2a;
+    padding: 2px;
+}
+
+.scard .fcard h4 {
+    margin-left: -500px;
+}
+
+.scard:hover {
+    background-color: rgb(241, 212, 217, 0.9);
+    /* light frosted glass effect */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* for Safari support */
+    box-shadow: 0 0 15px 4px rgba(30, 159, 229, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.scard.active {
+    background-color: rgb(241, 212, 217, 0.9);
+    /* light frosted glass effect */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* for Safari support */
+    box-shadow: 0 0 15px 4px rgba(30, 159, 229, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.fcard:hover {
+    background-color: rgba(11, 219, 219, 0.9);
+    /* light frosted glass effect */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* for Safari support */
+    box-shadow: 0 0 15px 4px rgba(30, 159, 229, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
+
+
+}
+
+.fcard.active {
+    background-color: rgba(11, 219, 219, 0.9);
+    /* light frosted glass effect */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* for Safari support */
+    box-shadow: 0 0 15px 4px rgba(30, 159, 229, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+
+
+.heartbtn.active {
+    color: red;
+}
+
+
+
+.heart:hover {
+    background-color: rgb(241, 212, 217, 0.9);
+    /* light frosted glass effect */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* for Safari support */
+    box-shadow: 0 0 15px 4px rgba(30, 159, 229, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+#seekbar {
+    flex: 1;
+    height: 10px;
+    width: 500px;
+    appearance: none;
+    background: #555;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 2px;
+    margin-top: 5px;
+
+}
+
+
+
+.duration {
+    margin-top: 3px;
+}
+
+
+.play-btn {
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    z-index: 10;
+    /* ensure it's above other content */
+    margin: -5px;
+
+}
+
+
+#progress {
+    -webkit-appearance: none;
+    /* fixed */
+    appearance: none;
+    /* for modern browsers */
+    width: 80%;
+    height: 6px;
+    background-color: rgb(227, 24, 156);
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 10px;
+    margin-top: 5px;
+    margin-left: 100px;
+
+}
+
+
+
+#progress::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    background: white;
+    border-radius: 50%;
+    border: none;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+    margin-top: -1px;
+    /* aligns thumb with track */
+}
+
+.fcardcontainer {
+    display: flex;
+    flex-wrap: wrap;
+    overflow-y: auto;
+    /* corrected */
+    padding: 10px;
+    max-height: 70vh;
+    overflow-x: hidden;
+    margin-top: -25px;
+
+}
+
+
+
+
+.remove-btn {
+    position: absolute;
+    display: flex;
+    border-radius: 5px;
+    width: 45px;
+    height: 25px;
+    margin-left: -245px;
+    margin-top: 7px;
+    font-size: xx-small;
+    visibility: hidden;
+}
+
+.fcard .play-btn {
+    margin: -20px;
+    color: white;
+    margin-right: -15px;
+    margin-bottom: 6px;
+    visibility: hidden;
+}
+
+/* Show play button when hovering over the .fcard container */
+.fcard:hover .play-btn {
+    visibility: visible;
+}
+
+/*-----------------------------------------------------------------------------------------------------------
+
+/* Mobile styles (for devices 768px and below) */
+
+@media only screen and (max-width: 768px) {
+    .left {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 70vw;
+        height: 900vh;
+        transform: translateX(-100%);
+        z-index: 9999;
+        /* High z-index to appear above everything */
+
+    }
+
+    .left.active {
+        transform: translateX(0);
+    }
+
+    .right {
+        width: 100vw;
+    }
+
+
+    .scard {
+        width: 200px;
+        /* or 100% or smaller like 300px */
+        height: 60px;
+        /* optional: adjust height if needed */
+        font-size: x-small;
+
+    }
+.fcard{
+    font-size: x-small;
+
+}
+    #progress {
+        width: 85%;
+        height: 5px;
+        padding: 8px 0;
+        margin-left: 25px;
+        z-index: 9999;
+        position: fixed;
+        z-index: 100000;
+    }
+
+    #progress::-webkit-slider-thumb {
+        height: 14px;
+        width: 14px;
+    }
+
+
+    .number {
+        width: 22px;
+        height: 60px;
+        font-size: x-small;
+
+    }
+
+    .time {
+        width: 40px;
+        height: 60px;
+        font-size: x-small;
+    }
+
+    .btn {
+
+        width: 60px;
+        height: 60px;
+    }
+
+
+    .heart {
+        width: 30px;
+        height: 60px;
+
+    }
+
+    .cardcontainer {
+        overflow: auto;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        max-height: 80vh;
+    }
+
+    .fcard {
+        width: 220px;
+        height: 60px;
+
+    }
+
+    #closeMenu {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        margin-top: 23px;
+        margin-left: 40px;
+        background-color: black;
+        color: white;
+        height: 40px;
+        width: 40px;
+    }
+
+    .menu-toggle {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        z-index: 2000;
+        background: none;
+        border: none;
+        font-size: 24px;
+        cursor: pointer;
+        color: white;
+    }
+
+
+    .index-page #progress {
+        position: fixed !important;
+        margin-top: 850px !important;
+        margin-left: -393px !important;
+        width: 378px !important;
+    z-index: 10000 !important;}
+
+}
+
+

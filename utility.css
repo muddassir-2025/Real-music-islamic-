@@ -1,0 +1,57 @@
+body{
+    background-color: black;
+    color: white;
+    font-family: cursive;
+}
+
+.border{
+    border: 2px solid rgb(21, 21, 21);
+margin: 4px;
+}
+
+.flex{
+    display: flex;
+}
+
+justify-content{
+    justify-content: center;
+}
+
+align-items{
+    align-items: center;
+}
+
+/* Scrollbar for WebKit browsers (Chrome, Edge, Safari) */
+::-webkit-scrollbar {
+  width: 15px; /* width of vertical scrollbar */
+}
+
+::-webkit-scrollbar-track {
+  background:rgb(228, 67, 94); /* dark background for track */
+   margin: 5px 0; /* This shortens the scrollbar by adding space at top & bottom */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: pink; /* dark blue thumb */
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(243, 185, 195); /* darker blue on hover */
+}
+
+.bg{
+       background-color: #28a745;
+    border:none}
+
+    .bg:hover{
+        background-color: #046b1c;
+    }
+
+.heartbtn{
+  margin-top: 17px;
+}
+
+  
+
+ 

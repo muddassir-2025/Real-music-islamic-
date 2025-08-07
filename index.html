@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="utility.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real music</title>
+</head>
+
+<body  class="index-page" >
+    <div class="container flex">
+        <div class="left">
+            <div class="home border">
+
+                <div class="ccard" style="margin-top: 15px;" " onclick=" window.location.href='search.html'">search</div>
+                <div style=" margin-top: 40px; margin-left: 130px;">my favorites</div>
+                
+                <!-- Inside your .left sidebar -->
+<button id="closeMenu" style="position: absolute; top: 10px; left: 10px; ; margin-top: 23px;margin-left: 40px;">×</button>
+
+
+
+
+            </div>
+
+            <div class="library border ">
+
+                <div class="fcardcontainer ">
+
+                    <div id="allFavorites"></div>
+
+
+                </div>
+            </div>
+        </div>
+        <div class="right border" style="margin-left: 10px;">
+  <button id="menuToggle" class="menu-toggle">☰</button>
+
+
+
+            <div class="playlist">
+                <div class="cardcontainer" style="margin-left:71px">
+
+                    <div class="card" onclick="window.location.href='nasheed.html'">
+                        <img src="modesty.png" alt="">
+                        <h3>Top favourite</h3>
+                        <p>my favourite</p>
+                    </div>
+                    <div class="card" onclick="window.location.href='quran.html'">
+                        <img src="Modesty is souls True light_men.png"
+                            alt="">
+                        <h3>Quran</h3>
+                        <p>deep and orignal style</p>
+                    </div>
+                    <div class="card" onclick="window.location.href='quranlofi.html'">
+                        <img src="life.png"
+                            alt="">
+                        <h3>Quran lofi (relax)</h3>
+                        <p>peaceful calm recitations</p>
+                    </div>
+                    <div class="card" onclick="window.location.href='nasheedarabic.html'">
+                        <img src="O complainer, what is wrong with you Be beautiful and you will see the worl_20250625_231658_0000 (2) (2) (1).png"
+                            alt="">
+                        <h3>Nasheed Arabic</h3>
+                        <p>spirutal calm hope giving</p>
+                    </div>
+
+                    <div class="card"  onclick="window.location.href='nasheedenglish.html'">
+                        <img src="paitence.png"
+                            alt="">
+                        <h3>Nasheed English</h3>
+                        <p>Energetic music replacement</p>
+                    </div>
+
+                    <div class="card" onclick="window.location.href='nasheedslowed.html'" >
+                        <img src="swim.jpg"
+                            alt="">
+                        <h3>Nasheed slowed </h3>
+                        <p>Deep connection</p>
+                    </div>
+
+
+
+ <!--<button onclick="clearAllFavorites()">Clear All Favorites</button> -->
+
+
+                </div>
+
+
+            </div>
+
+        </div>
+        <span><input type="range" style="margin-top: 600px; margin-left: -1008px; position:absolute; width:900px;"
+                value="0" id="progress" /></span>
+    </div>
+
+
+    </div>
+
+
+    <script src="script.js"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        function goNext() {
+            window.location.href = "nasheed.html";
+        }
+    </script>
+
+
+    </script>
+
+    <script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const allKeys = [
+            "nasheedFavorites",
+            "nasheedArabicFavorites",
+            "nasheedEnglishFavorites",
+            "nasheedSlowedFavorites",
+            "quranFavorites",
+            "quranLofiFavorites"
+        ];
+
+        const favContainer = document.getElementById("allFavorites");
+
+        allKeys.forEach(key => {
+            const items = JSON.parse(localStorage.getItem(key)) || [];
+
+            items.forEach(item => {
+                const card = document.createElement("div");
+                card.classList.add("fav-card");
+                card.setAttribute("data-title", item.title);
+                card.setAttribute("data-key", key);
+
+                card.innerHTML = `
+                    <p>${item.title}</p>
+                    <button class="remove-btn">Remove</button>
+                `;
+
+                // Add remove functionality
+                card.querySelector(".remove-btn").addEventListener("click", () => {
+                    removeFromFavorites(key, item.title, card);
+                });
+
+                favContainer.appendChild(card);
+            });
+        });
+
+        function removeFromFavorites(key, title, cardElement) {
+            // Get current favorites
+            let favorites = JSON.parse(localStorage.getItem(key)) || [];
+
+            // Remove the matching item by title
+            favorites = favorites.filter(item => item.title !== title);
+
+            // Save back updated list
+            localStorage.setItem(key, JSON.stringify(favorites));
+
+            // Remove card from DOM
+            cardElement.remove();
+        }
+    });
+</script>
+
+
+<!--<script>
+
+    function clearAllFavorites() {
+        const allKeys = [
+            "nasheedFavorites",
+            "nasheedArabicFavorites",
+            "nasheedEnglishFavorites",
+            "nasheedSlowedFavorites",
+            "quranFavorites",
+            "quranLofiFavorites"
+        ];
+
+        allKeys.forEach(key => {
+            localStorage.removeItem(key);
+        });
+
+        // Remove all displayed cards from DOM
+        document.getElementById("allFavorites").innerHTML = "";
+        alert("All favorites cleared!");
+    }
+</script>-->
+
+
+</body>
+
+</html>
