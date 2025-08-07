@@ -399,6 +399,12 @@
 /* Mobile styles (for devices 768px and below) */
 
 @media only screen and (max-width: 768px) {
+ .body{
+      font-family: 'Inter', 'poppins';
+         
+
+     
+    
     .left {
         position: fixed;
         top: 0;
@@ -520,5 +526,6 @@
     z-index: 10000 !important;}
 
 }
+
 
 
