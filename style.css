@@ -400,7 +400,7 @@
 
 @media only screen and (max-width: 768px) {
  .body{
-      font-family: 'Inter', 'poppins';
+      font-family: 'Inter', 'poppins' !important;
  }
 
      
@@ -526,6 +526,7 @@
     z-index: 10000 !important;}
 
 }
+
 
 
 
