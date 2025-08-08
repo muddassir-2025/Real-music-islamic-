@@ -1,190 +1,243 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Document</title>
-  <link rel="stylesheet" href="api.css">
+  <link rel="stylesheet" href="api.css" />
+  <style>
+    /* Time display styling */
+    .time-display {
+      margin-left: 10px;
+      font-family: monospace;
+      font-size: 0.9rem;
+      color: #555;
+      user-select: none;
+    }
+  </style>
 </head>
+
 <body>
-  
+  <input type="text" id="search-box" placeholder="Search nasheed, Qur'an recitation..." />
+  <button id="search-btn">Search</button>
+  <div class="ccard" style="margin-top: -99px; margin-left:122px;" onclick="window.location.href='index.html'">
+    Home
+  </div>
 
-  <input type="text" id="search-box" placeholder="Search nasheed, Qur'an recitation...">
-<button id="search-btn">Search</button>
+  <div id="videos-container"></div>
+  <div id="yt-player"></div>
 
-<div id="videos-container"></div>
-<div id="yt-player"></div>
+  <script>
+    const apiKey = "AIzaSyCdeNqzyKmLoX4htedjZJySFhQyULjHTzU";
+    const maxResults = 5;
+    const videosContainer = document.getElementById("videos-container");
+    const searchBox = document.getElementById("search-box");
+    const searchBtn = document.getElementById("search-btn");
 
-<script>
-const apiKey = "AIzaSyCdeNqzyKmLoX4htedjZJySFhQyULjHTzU";
-const maxResults = 50;
-const videosContainer = document.getElementById("videos-container");
-const searchBox = document.getElementById("search-box");
-const searchBtn = document.getElementById("search-btn");
+    let player;
+    let currentVideoId = null;
+    let lastCurrentTime = 0;
+    let progressInterval;
 
-let player;
-let currentVideoId = null;
-let progressInterval;
-
-async function fetchNasheedVideos(searchQuery) {
-  const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(searchQuery)}&type=video&maxResults=${maxResults}&key=${apiKey}`;
-  videosContainer.innerHTML = "<p>Loading...</p>";
-
-  try {
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-
-    const filtered = data.items.filter(item => {
-      const title = item.snippet.title.toLowerCase();
-      const desc = item.snippet.description.toLowerCase();
-
-      const includeKeywords = [ // Qur'an
-        "quran", "holy quran", "koran", "recitation", "tajweed", "tilawat",
-        "تلاوة", "القرآن", "القران الكريم", "سورة", "آية",
-        "quran","holy quran","alquran","al quran","koran","tajweed","qiraat","tilawat","recitation","quran recitation","mushaf","hafs","warsh","ayah","ayat","surah","juz","para","hizb","manzil","tajweed rules","quran tafsir","quran explanation","tafsir","tafseer","al-fatihah","al-baqarah","aal-e-imran","an-nisa","al-maidah","al-anam","al-araf","al-anfal","at-tawbah","yunus","hud","yusuf","ar-rad","ibrahim","al-hijr","an-nahl","al-isra","al-kahf","maryam","ta-ha","al-anbiya","al-hajj","al-muminun","an-nur","al-furqan","ash-shuara","an-naml","al-qasas","al-ankabut","ar-rum","luqman","as-sajdah","al-ahzab","saba","fatir","ya-sin","as-saffat","sad","az-zumar","ghafir","fussilat","ash-shura","az-zukhruf","ad-dukhan","al-jathiyah","al-ahqaf","muhammad","al-fath","al-hujurat","qaf","adh-dhariyat","at-tur","an-najm","al-qamar","ar-rahman","al-waqiah","al-hadid","al-mujadila","al-hashr","al-mumtahanah","as-saff","al-jumuah","al-munafiqun","at-taghabun","at-talaq","at-tahrim","al-mulk","al-qalam","al-haqqah","al-maarij","nuh","al-jinn","al-muzzammil","al-muddaththir","al-qiyamah","al-insan","al-mursalat","an-naba","an-naziat","abasa","at-takwir","al-infitar","al-mutaffifin","al-inshiqaq","al-buruj","at-tariq","al-ala","al-ghashiyah","al-fajr","al-balad","ash-shams","al-lail","ad-duha","ash-sharh","at-tin","al-alaq","al-qadr","al-bayyina","az-zalzalah","al-adiyat","al-qariah","at-takathur","al-asr","al-humazah","al-fil","quraish","al-maun","al-kawthar","al-kafirun","an-nasr","al-masad","al-ikhlas","al-falaq","an-nas",
-
-        // Nasheeds & Naat
-        "nasheed", "nashid", "nasyid", "naat", "hamd",
-        "نشيد", "انشودة", "أناشيد", "مديح",
-        "maher zain", "sami yusuf", "native deen", "hamza namira",
-        "mesut kurtis", "muhammad al muqit", "ahmed bukhatir",
-        "zain bhikha", "harris j", "raef", "iqbal ansari",
-        "hamid althufiri", "mishary rashid","hamid althufiri حامد الظفيري",
-        "maher zain", "sami yusuf", "native deen", "hamza namira",
-        "mesut kurtis", "muhammad al muqit", "ahmed bukhatir",
-        "zain bhikha", "harris j", "raef", "hamid althufiri",
-        "mishary rashid", "mishary rashid alafasy", "abdullah rolle",
-        "ali magrebi", "nashit zawawi", "izzat al nasheed", "junaid jamshed",
-        "atif aslam hamd", "mohammed tarek", "abdelrahman mohamed",
-        "abdullah al matrood", "ahmad saud", "ibrahim al arkani",
-        "khalid al jalil", "fares abbad", "omar esa", "islam sobhi",
-        "hafiz tahir qadri", "omer esa", "hafiz abu bakar",
-        "alhaaj hafiz tahir qadri", "saad al qureshi",
-        "dean salah", "safe adam", "yusuf chambers",
-        "castillo acapella", "muslim bilal", "mustafa khan",
-
-        // General authentic Islamic
-        "islamic", "islam", "muslim", "allah", "muhammad",
-        "صلى الله عليه وسلم", "دعاء", "الاسلام"
-/* your full include list */];
-      const excludeKeywords = [    // Avoid covers, remixes, memes, etc.
-        "remix", "funny", "parody", "meme", "game", "fortnite", "pubg",
-        "dance", "tik tok", "tiktok", "beats", "remastered",
-        "rap", "hip hop", "trap", "instrumental","shorts","tiktok", "reels", "status", "whatsapp status",
-        "clip", "clips", "edit", "edits", "transition", "trend", "trending", "1 minute", "30 sec","female","female voice","tranding","cute","love","music","sexy","music video","porn","sex","dance","T-series"
-    /* your full exclude list */];
-
-      return (
-        includeKeywords.some(k => title.includes(k) || desc.includes(k)) &&
-        !excludeKeywords.some(k => title.includes(k) || desc.includes(k))
-      );
-    });
-
-    if (filtered.length === 0) {
-      videosContainer.innerHTML = "<p>No nasheed videos found.</p>";
-      return;
+    function formatTime(seconds) {
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60);
+      return `${m}:${s.toString().padStart(2, "0")}`;
     }
-    
 
-    videosContainer.innerHTML = "";
-    filtered.forEach(item => {
-      const videoId = item.id.videoId;
-      const title = item.snippet.title;
-      const desc = item.snippet.description;
-      const thumbnail = item.snippet.thumbnails.medium.url;
+    async function fetchNasheedVideos(searchQuery) {
+      const apiUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${encodeURIComponent(
+        searchQuery
+      )}&type=video&maxResults=${maxResults}&key=${apiKey}`;
+      videosContainer.innerHTML = "<p>Loading...</p>";
 
-      const card = document.createElement("div");
-      card.className = "audio-card";
-      card.innerHTML = `
-        <img src="${thumbnail}" alt="${title}" class="thumbnail">
-        <div class="info">
-          <h3 class="title">${title}</h3>
-          <p class="desc">${desc.slice(0, 100)}...</p>
-          <button class="play-btn" data-video-id="${videoId}">▶ Play</button>
-          <button class="pause-btn" data-video-id="${videoId}">⏸ Pause</button>
-          <input type="range" min="0" max="100" value="0" class="seek-bar" data-video-id="${videoId}">
-        </div>
-      `;
-      videosContainer.appendChild(card);
-    });
+      try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
 
-  } catch (error) {
-    console.error("Error fetching videos:", error);
-    videosContainer.innerHTML = "<p>Error loading videos.</p>";
-  }
-}
+        const filtered = data.items.filter((item) => {
+          const title = item.snippet.title.toLowerCase();
+          const desc = item.snippet.description.toLowerCase();
 
-function onYouTubeIframeAPIReady() {
-  player = new YT.Player("yt-player", {
-    height: "0",
-    width: "0",
-    videoId: "",
-    playerVars: { autoplay: 1 },
-    events: {
-      onStateChange: onPlayerStateChange
+          const includeKeywords = [
+            // Abbreviated for brevity - use your full list here
+
+            "quran", "holy quran", "koran", "recitation", "tajweed", "tilawat",
+            "تلاوة", "القرآن", "القران الكريم", "سورة", "آية",
+            "quran", "holy quran", "alquran", "al quran", "koran", "tajweed", "qiraat", "tilawat", "recitation", "quran recitation", "mushaf", "hafs", "warsh", "ayah", "ayat", "surah", "juz", "para", "hizb", "manzil", "tajweed rules", "quran tafsir", "quran explanation", "tafsir", "tafseer", "al-fatihah", "al-baqarah", "aal-e-imran", "an-nisa", "al-maidah", "al-anam", "al-araf", "al-anfal", "at-tawbah", "yunus", "hud", "yusuf", "ar-rad", "ibrahim", "al-hijr", "an-nahl", "al-isra", "al-kahf", "maryam", "ta-ha", "al-anbiya", "al-hajj", "al-muminun", "an-nur", "al-furqan", "ash-shuara", "an-naml", "al-qasas", "al-ankabut", "ar-rum", "luqman", "as-sajdah", "al-ahzab", "saba", "fatir", "ya-sin", "as-saffat", "sad", "az-zumar", "ghafir", "fussilat", "ash-shura", "az-zukhruf", "ad-dukhan", "al-jathiyah", "al-ahqaf", "muhammad", "al-fath", "al-hujurat", "qaf", "adh-dhariyat", "at-tur", "an-najm", "al-qamar", "ar-rahman", "al-waqiah", "al-hadid", "al-mujadila", "al-hashr", "al-mumtahanah", "as-saff", "al-jumuah", "al-munafiqun", "at-taghabun", "at-talaq", "at-tahrim", "al-mulk", "al-qalam", "al-haqqah", "al-maarij", "nuh", "al-jinn", "al-muzzammil", "al-muddaththir", "al-qiyamah", "al-insan", "al-mursalat", "an-naba", "an-naziat", "abasa", "at-takwir", "al-infitar", "al-mutaffifin", "al-inshiqaq", "al-buruj", "at-tariq", "al-ala", "al-ghashiyah", "al-fajr", "al-balad", "ash-shams", "al-lail", "ad-duha", "ash-sharh", "at-tin", "al-alaq", "al-qadr", "al-bayyina", "az-zalzalah", "al-adiyat", "al-qariah", "at-takathur", "al-asr", "al-humazah", "al-fil", "quraish", "al-maun", "al-kawthar", "al-kafirun", "an-nasr", "al-masad", "al-ikhlas", "al-falaq", "an-nas",
+
+            // Nasheeds & Naat
+            "nasheed", "nashid", "nasyid", "naat", "hamd",
+            "نشيد", "انشودة", "أناشيد", "مديح",
+            "maher zain", "sami yusuf", "native deen", "hamza namira",
+            "mesut kurtis", "muhammad al muqit", "ahmed bukhatir",
+            "zain bhikha", "harris j", "raef", "iqbal ansari",
+            "hamid althufiri", "mishary rashid", "hamid althufiri حامد الظفيري",
+            "maher zain", "sami yusuf", "native deen", "hamza namira",
+            "mesut kurtis", "muhammad al muqit", "ahmed bukhatir",
+            "zain bhikha", "harris j", "raef", "hamid althufiri",
+            "mishary rashid", "mishary rashid alafasy", "abdullah rolle",
+            "ali magrebi", "nashit zawawi", "izzat al nasheed", "junaid jamshed",
+            "atif aslam hamd", "mohammed tarek", "abdelrahman mohamed",
+            "abdullah al matrood", "ahmad saud", "ibrahim al arkani",
+            "khalid al jalil", "fares abbad", "omar esa", "islam sobhi",
+            "hafiz tahir qadri", "omer esa", "hafiz abu bakar",
+            "alhaaj hafiz tahir qadri", "saad al qureshi",
+            "dean salah", "safe adam", "yusuf chambers",
+            "castillo acapella", "muslim bilal", "mustafa khan", "myke rook", "vocals",
+
+            // General authentic Islamic
+            "islamic", "islam", "muslim", "allah", "muhammad",
+            "صلى الله عليه وسلم", "دعاء", "الاسلام"];
+          const excludeKeywords = [
+            // Avoid covers, remixes, memes, etc.
+            "remix", "funny", "parody", "meme", "game", "fortnite", "pubg",
+            "dance", "tik tok", "tiktok", "beats", "remastered",
+            "rap", "hip hop", "trap", "instrumental", "shorts", "tiktok", "reels", "status", "whatsapp status",
+            "clip", "clips", "edit", "edits", "transition", "trend", "trending", "1 minute", "30 sec", "female", "female voice", "tranding", "cute", "love", "music", "sexy", "music video", "porn", "sex", "dance", "T-series"
+            /* your full exclude list */
+          ];
+
+          return (
+            includeKeywords.some(
+              (k) => title.includes(k) || desc.includes(k)
+            ) &&
+            !excludeKeywords.some(
+              (k) => title.includes(k) || desc.includes(k)
+            )
+          );
+        });
+
+        if (filtered.length === 0) {
+          videosContainer.innerHTML = "<p>No nasheed videos found.</p>";
+          return;
+        }
+
+        videosContainer.innerHTML = "";
+        filtered.forEach((item) => {
+          const videoId = item.id.videoId;
+          const title = item.snippet.title;
+          const desc = item.snippet.description;
+          const thumbnail = item.snippet.thumbnails.medium.url;
+
+          const card = document.createElement("div");
+          card.className = "audio-card";
+          card.innerHTML = `
+            <img src="${thumbnail}" alt="${title}" class="thumbnail" />
+            <div class="info">
+              <h3 class="title">${title}</h3>
+              <p class="desc">${desc.slice(0, 100)}...</p>
+              <button class="play-btn" data-video-id="${videoId}">▶ Play</button>
+              <button class="pause-btn" data-video-id="${videoId}">⏸ Pause</button>
+              <span class="time-display" data-video-id="${videoId}">0:00 / 0:00</span>
+              <input
+                type="range"
+                min="0"
+                max="100"
+                value="0"
+                class="seek-bar"
+                data-video-id="${videoId}"
+              />
+            </div>
+          `;
+          videosContainer.appendChild(card);
+        });
+      } catch (error) {
+        console.error("Error fetching videos:", error);
+        videosContainer.innerHTML = "<p>Error loading videos.</p>";
+      }
     }
-  });
-}
 
-function onPlayerStateChange(event) {
-  if (event.data === YT.PlayerState.PLAYING) {
-    startProgressUpdater();
-  } else {
-    clearInterval(progressInterval);
-  }
-}
-
-function startProgressUpdater() {
-  clearInterval(progressInterval);
-  progressInterval = setInterval(() => {
-    if (player && player.getDuration) {
-      const duration = player.getDuration();
-      const currentTime = player.getCurrentTime();
-      const progressPercent = (currentTime / duration) * 100;
-
-      document.querySelectorAll(`.seek-bar[data-video-id="${currentVideoId}"]`).forEach(bar => {
-        bar.value = progressPercent;
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player("yt-player", {
+        height: "0",
+        width: "0",
+        videoId: "",
+        playerVars: { autoplay: 1 },
+        events: {
+          onStateChange: onPlayerStateChange,
+        },
       });
     }
-  }, 500);
-}
 
-videosContainer.addEventListener("click", (e) => {
-  if (e.target.classList.contains("play-btn")) {
-    const videoId = e.target.dataset.videoId;
-    currentVideoId = videoId;
-    player.loadVideoById(videoId);
-  }
+    function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.PLAYING) {
+        startProgressUpdater();
+      } else {
+        clearInterval(progressInterval);
+      }
+    }
 
-  if (e.target.classList.contains("pause-btn")) {
-    player.pauseVideo();
-  }
-});
+    function startProgressUpdater() {
+      clearInterval(progressInterval);
+      progressInterval = setInterval(() => {
+        if (player && player.getDuration) {
+          const duration = player.getDuration();
+          const currentTime = player.getCurrentTime();
+          const progressPercent = (currentTime / duration) * 100;
 
-videosContainer.addEventListener("input", (e) => {
-  if (e.target.classList.contains("seek-bar")) {
-    const seekPercent = e.target.value;
-    const duration = player.getDuration();
-    player.seekTo((seekPercent / 100) * duration, true);
-  }
-});
+          document
+            .querySelectorAll(`.seek-bar[data-video-id="${currentVideoId}"]`)
+            .forEach((bar) => {
+              bar.value = progressPercent;
+            });
 
-searchBtn.addEventListener("click", () => {
-  const query = searchBox.value.trim();
-  if (query) fetchNasheedVideos(query);
-});
+          document
+            .querySelectorAll(`.time-display[data-video-id="${currentVideoId}"]`)
+            .forEach((span) => {
+              span.textContent = `${formatTime(currentTime)} / ${formatTime(
+                duration
+              )}`;
+            });
+        }
+      }, 500);
+    }
 
-searchBox.addEventListener("keypress", (e) => {
-  if (e.key === "Enter") {
-    searchBtn.click();
-  }
-});
+    videosContainer.addEventListener("click", (e) => {
+      if (e.target.classList.contains("play-btn")) {
+        const videoId = e.target.dataset.videoId;
 
-fetchNasheedVideos("لقران الكريم");
-</script>
-<script src="https://www.youtube.com/iframe_api"></script>
+        if (currentVideoId === videoId) {
+          // Resume from paused position
+          player.seekTo(lastCurrentTime, true);
+          player.playVideo();
+        } else {
+          // Load new video from start
+          currentVideoId = videoId;
+          lastCurrentTime = 0;
+          player.loadVideoById(videoId);
+        }
+      }
 
+      if (e.target.classList.contains("pause-btn")) {
+        lastCurrentTime = player.getCurrentTime();
+        player.pauseVideo();
+      }
+    });
+
+    videosContainer.addEventListener("input", (e) => {
+      if (e.target.classList.contains("seek-bar")) {
+        const seekPercent = e.target.value;
+        const duration = player.getDuration();
+        player.seekTo((seekPercent / 100) * duration, true);
+      }
+    });
+
+    searchBtn.addEventListener("click", () => {
+      const query = searchBox.value.trim();
+      if (query) fetchNasheedVideos(query);
+    });
+
+    searchBox.addEventListener("keypress", (e) => {
+      if (e.key === "Enter") {
+        searchBtn.click();
+      }
+    });
+
+    fetchNasheedVideos("لقران الكريم");
+  </script>
+  <script src="https://www.youtube.com/iframe_api"></script>
 </body>
+
 </html>
-
-
