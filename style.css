@@ -16,7 +16,7 @@
 }
 
 .home {
-    height: 25vh;
+    height: 20vh;
 
 
 }
@@ -117,11 +117,11 @@
     cursor: pointer;
     background-color: rgb(60, 57, 57);
     position: relative;
-    gap: 12px;
+    gap: 7px;
     padding-bottom: 5px;
     padding-left: 25px;
     padding-right: 30px;
-    margin-top: 10px;
+    margin-top: 0px;
     border: 1px solid white;
     text-overflow: ellipsis;
 
@@ -569,6 +569,7 @@
     z-index: 10000 !important;}
 
 }
+
 
 
 
