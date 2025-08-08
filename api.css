@@ -12,7 +12,7 @@ body {
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 20px;
   padding: 20px;
-  margin-top: 120px;
+  margin-top: 50px;
 }
 
 /* ====== Audio Card ====== */
@@ -75,8 +75,35 @@ body {
   transition: background 0.2s ease, transform 0.1s ease;
 }
 
+.pause-btn{
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 14px;
+  font-weight: 600;
+  color: white;
+  background: linear-gradient(135deg, #0aa3db, #033b74);
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.time-display{
+  color: white;
+  background-color: black;
+  font-weight: bold;
+}
+
+
 .play-btn:hover {
-  background: linear-gradient(135deg, #17a94a, #1ed760);
+  background: linear-gradient(135deg, #023a16, #04451b);
+    transform: translateY(-4px);
+ 
+}
+
+.pause-btn:hover{
+   background: linear-gradient(135deg, #0a0439, #1d036a);
+     transform: translateY(-4px);
 }
 
 .play-btn:active {
@@ -172,4 +199,53 @@ body {
 #search-box, #search-btn {
   vertical-align: middle;
  
+}
+
+
+
+
+.ccard {
+    width: 150px;
+    height: 45px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: #2b2a2a;
+    padding: 2px;
+    margin-left: 100px;
+    position: relative;
+
+}
+
+.ccard:hover {
+    background-color: rgba(220, 246, 51, 0.9);
+    /* light frosted glass effect */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    /* for Safari support */
+    box-shadow: 0 0 15px 4px rgba(30, 159, 229, 0.6);
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+@media only screen and (max-width: 768px) {
+
+
+  
+#search-box {
+  margin-left:-5px;
+}
+
+#search-btn {
+margin-left: -2px;
+  
+}
+
+
+
+
 }
