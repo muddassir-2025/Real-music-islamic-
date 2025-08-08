@@ -433,7 +433,14 @@
 
     }
 .fcard{
-    font-size: x-small;
+    font-size: medium;
+
+       
+.fcard .play-btn {
+   
+    margin-bottom: -5px !important;
+   
+}
 
 }
     #progress {
@@ -524,6 +531,7 @@
     z-index: 10000 !important;}
 
 }
+
 
 
 
