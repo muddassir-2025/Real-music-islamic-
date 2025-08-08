@@ -394,6 +394,35 @@
     visibility: visible;
 }
 
+ #closeMenu {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        margin-top: 23px;
+        margin-left: 40px;
+        color: white;
+        height: 40px;
+        width: 40px;
+        background-color: transparent;
+        border: none;
+        font-size: large;
+    }
+
+
+.menu-toggle {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2000;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+}
+
+
 /*-----------------------------------------------------------------------------------------------------------
 
 /* Mobile styles (for devices 768px and below) */
@@ -509,23 +538,27 @@
         left: 10px;
         margin-top: 23px;
         margin-left: 40px;
-        background-color: black;
         color: white;
         height: 40px;
         width: 40px;
-    }
-
-    .menu-toggle {
-        position: absolute;
-        top: 10px;
-        left: 10px;
-        z-index: 2000;
-        background: none;
+        background-color: transparent;
         border: none;
-        font-size: 24px;
-        cursor: pointer;
-        color: white;
+        font-size: large;
     }
+}
+
+.menu-toggle {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    z-index: 2000;
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    color: white;
+    background-color: transparent;
+}
 
 
     .index-page #progress {
@@ -536,6 +569,7 @@
     z-index: 10000 !important;}
 
 }
+
 
 
 
