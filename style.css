@@ -16,7 +16,7 @@
 }
 
 .home {
-    height: 20vh;
+    height: 20vh !important;
 
 
 }
@@ -574,6 +574,7 @@
 .home{
 height: 8vh;
 }
+
 
 
 
