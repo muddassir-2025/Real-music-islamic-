@@ -22,7 +22,7 @@
 }
 
 .library {
-    height: 70vh;
+    height: 75vh;
     background-color: rgb(28, 27, 27);
     overflow-y: scroll;
     display: flex;
@@ -40,7 +40,7 @@
     flex-wrap: wrap;
     margin: 30px;
     overflow-y: scroll;
-    max-height: 75vh;
+    max-height: 80vh;
 
 
 
@@ -569,6 +569,7 @@
     z-index: 10000 !important;}
 
 }
+
 
 
 
