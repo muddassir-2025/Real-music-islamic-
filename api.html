@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Document</title>
+  <title>Nasheed Player</title>
   <link rel="stylesheet" href="api.css" />
   <style>
     /* Time display styling */
@@ -14,6 +14,15 @@
       font-size: 0.9rem;
       color: #555;
       user-select: none;
+    }
+
+    /* Hide YouTube iframe off-screen but keep interactive */
+    #yt-player {
+      width: 1px;
+      height: 1px;
+      position: absolute;
+      left: -9999px;
+      top: 0;
     }
   </style>
 </head>
@@ -39,6 +48,7 @@
     let currentVideoId = null;
     let lastCurrentTime = 0;
     let progressInterval;
+    let playerReady = false;
 
     function formatTime(seconds) {
       const m = Math.floor(seconds / 60);
@@ -151,14 +161,29 @@
 
     function onYouTubeIframeAPIReady() {
       player = new YT.Player("yt-player", {
-        height: "0",
-        width: "0",
+        height: "1",
+        width: "1",
         videoId: "",
-        playerVars: { autoplay: 1 },
+        playerVars: { autoplay: 0 },
         events: {
+          onReady: onPlayerReady,
           onStateChange: onPlayerStateChange,
         },
       });
+    }
+
+    function onPlayerReady(event) {
+      playerReady = true;
+      console.log("Player is ready");
+
+      // Unlock audio on mobile on first touchstart
+      document.body.addEventListener("touchstart", () => {
+        if (player && player.playVideo) {
+          player.playVideo();
+          player.pauseVideo();
+          console.log("Audio context unlocked by touchstart");
+        }
+      }, { once: true });
     }
 
     function onPlayerStateChange(event) {
@@ -195,15 +220,22 @@
     }
 
     videosContainer.addEventListener("click", (e) => {
+      if (!playerReady) {
+        alert("Player is not ready yet. Please wait a moment.");
+        return;
+      }
+
       if (e.target.classList.contains("play-btn")) {
         const videoId = e.target.dataset.videoId;
 
         if (currentVideoId === videoId) {
           // Resume from paused position
+          console.log("Resuming video", videoId, "from", lastCurrentTime);
           player.seekTo(lastCurrentTime, true);
           player.playVideo();
         } else {
           // Load new video from start
+          console.log("Loading new video", videoId);
           currentVideoId = videoId;
           lastCurrentTime = 0;
           player.loadVideoById(videoId);
@@ -212,11 +244,14 @@
 
       if (e.target.classList.contains("pause-btn")) {
         lastCurrentTime = player.getCurrentTime();
+        console.log("Pausing video at", lastCurrentTime);
         player.pauseVideo();
       }
     });
 
     videosContainer.addEventListener("input", (e) => {
+      if (!playerReady) return;
+
       if (e.target.classList.contains("seek-bar")) {
         const seekPercent = e.target.value;
         const duration = player.getDuration();
