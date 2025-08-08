@@ -22,7 +22,7 @@
 }
 
 .library {
-    height: 75vh;
+    height: 80vh;
     background-color: rgb(28, 27, 27);
     overflow-y: scroll;
     display: flex;
@@ -106,7 +106,7 @@
 
 .fcard {
     width: 300px;
-    height: 65px;
+    height: 80px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -337,7 +337,7 @@
     padding: 10px;
     margin-top: -50px;
     margin-left: 100px;
-
+   
 }
 
 
@@ -360,7 +360,7 @@
     overflow-y: auto;
     /* corrected */
     padding: 10px;
-    max-height: 70vh;
+    max-height: 90vh;
     overflow-x: hidden;
     margin-top: -25px;
 
@@ -428,10 +428,12 @@
 /* Mobile styles (for devices 768px and below) */
 
 @media only screen and (max-width: 768px) {
-
-
-     
     
+    body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+
     .left {
         position: fixed;
         top: 0;
@@ -446,6 +448,7 @@
 
     .left.active {
         transform: translateX(0);
+        height: 870px;
     }
 
     .right {
@@ -458,25 +461,15 @@
         /* or 100% or smaller like 300px */
         height: 60px;
         /* optional: adjust height if needed */
-        font-size: small;
-        text-align: center;
-        text-overflow:ellipses;
+        font-size: x-small;
 
     }
-.fcard{
-    font-size: medium;
- font-size: small;
-        text-align: center;
-        text-overflow:ellipses;
 
-       
-.fcard .play-btn {
-   
-    margin-bottom: -5px !important;
-   
-}
+    .fcard {
+        font-size: x-small;
 
-}
+    }
+
     #progress {
         width: 85%;
         height: 5px;
@@ -532,6 +525,13 @@
 
     }
 
+
+    .fcard .play-btn {
+
+        margin-bottom: -5px !important;
+
+    }
+
     #closeMenu {
         position: absolute;
         top: 10px;
@@ -561,31 +561,17 @@
 }
 
 
-    .index-page #progress {
-        position: fixed !important;
-        margin-top: 850px !important;
-        margin-left: -393px !important;
-        width: 378px !important;
-    z-index: 10000 !important;}
-
+.index-page #progress {
+    position: fixed !important;
+    margin-top: 850px !important;
+    margin-left: -393px !important;
+    width: 378px !important;
+    z-index: 10000 !important;
 }
 
 
 .home{
 height: 72px;
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
