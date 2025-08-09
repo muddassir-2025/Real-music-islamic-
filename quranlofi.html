@@ -271,7 +271,22 @@
 
     </div>
 
+ <script>
+document.querySelectorAll(".scard,.fcard").forEach(card => {
+    card.addEventListener("click", () => {
+        const title = card.getAttribute("data-title");
+        const audioEl = card.querySelector("audio");
+        const src = audioEl.src; // absolute URL
 
+        localStorage.setItem("currentAudio", JSON.stringify({
+            title: title,
+            src: src
+        }));
+
+        window.location.href = "player.html";
+    });
+});
+</script>
 
 
 
@@ -295,3 +310,4 @@
 
 
 </html>
+
