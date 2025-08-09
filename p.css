@@ -1,0 +1,107 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  height: 100vh;
+ background-color: rgb(0, 0, 0);
+ font-family: cursive;
+}
+
+.container {
+  display: flex;
+  justify-content: center; /* Horizontal center */
+  align-items: center;     /* Vertical center */
+  height: 100vh;           /* Needed for vertical centering */
+}
+
+.music {
+  width: 60vh;
+  height: 70vh;
+  background: rgb(238, 192, 199); 
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); /* for Safari */
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  text-align: center;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  padding-top: 30px;
+}
+
+img {
+  width: 30vh;
+  height: 30vh;
+  object-fit: cover;        /* Keeps image from stretching */
+  border-radius: 50%;       /* Makes it circular */
+  border: 5px solid white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  margin-bottom: 200px;
+}
+ 
+.music h2 {
+    margin-top: -180px;
+    color: black;
+}
+ .music p{
+     color: black;
+ }
+#progress {
+  -webkit-appearance: none;  /* fixed */
+  appearance: none;          /* for modern browsers */
+  width: 90%;
+  height: 6px;
+  background-color: rgb(227, 24, 156);
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 10px;
+  margin-top: 20px;
+}
+#progress::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  height: 16px;
+  width: 16px;
+  background: white;
+  border-radius: 50%;
+  border: none;
+  box-shadow: 0 0 2px rgba(0,0,0,0.5);
+  margin-top: -1px; /* aligns thumb with track */
+}
+
+
+.controls i {
+  font-size: 34px;
+  color: white;
+  cursor: pointer;
+  margin: 15px;
+  transition: transform 0.2s ease;
+}
+.controls i:hover {
+  transform: scale(1.3);
+}
+
+
+.btn {
+
+    width: 60px;
+    height: 60px;
+    border-radius: 10px;
+    position: relative;
+    transition: box-shadow 0.3s ease;
+    cursor: pointer;
+    background-color: #2b2a2a;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: small;
+    margin: 20px;
+    margin-left: 70px;
+    margin-top: -370px;
+}
+

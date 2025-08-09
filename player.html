@@ -1,0 +1,137 @@
+check player html also: <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Audio Player</title>
+    <link rel="stylesheet" href="p.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <button class="btn" onclick="goPrev()">Previous</button>
+        <div class="music">
+            <img id="cover" src="Modesty is soul's True light_20250604_230906_0000.png" alt="">
+            <h2 id="title">Audio Title</h2>
+            <p id="artist">Artist</p>
+
+            <!-- ✅ Audio will be set dynamically -->
+            <audio id="audio"></audio>
+
+            <input type="range" value="0" id="progress" />
+            <div id="time" style="margin-top: 10px; color: black;">00:00 / 00:00</div>
+
+            <div class="controls">
+                <i class="fa-solid fa-backward" id="backward"></i>
+                <i class="fa-solid fa-circle-play" id="ctrlicon" onclick="playpause()"></i>
+                <i class="fa-solid fa-forward" id="forward"></i>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <script>
+        function goPrev() {
+            window.location.href = "../nasheed.html";
+        }
+
+        // 🎯 Load from localStorage
+        const audioData = JSON.parse(localStorage.getItem("currentAudio"));
+        const audio = document.getElementById("audio");
+        const titleEl = document.getElementById("title");
+        const artistEl = document.getElementById("artist");
+        const coverEl = document.getElementById("cover");
+
+        if (audioData && audioData.src) {
+            audio.src = audioData.src;
+            titleEl.textContent = audioData.title || "Untitled Audio";
+            artistEl.textContent = audioData.artist || "";
+            if (audioData.cover) {
+                coverEl.src = audioData.cover;
+            }
+            document.title = audioData.title || "Audio Player";
+        } else {
+            document.body.innerHTML = "<h3>No audio selected.</h3>";
+        }
+
+        let progress = document.getElementById("progress");
+        let ctrlicon = document.getElementById("ctrlicon");
+        let timeDisplay = document.getElementById("time");
+
+        function formatTime(seconds) {
+            let min = Math.floor(seconds / 60);
+            let sec = Math.floor(seconds % 60);
+            return `${min.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+        }
+
+        audio.onloadedmetadata = function () {
+            progress.max = audio.duration;
+            progress.value = audio.currentTime;
+            timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+        };
+
+        audio.ontimeupdate = function () {
+            progress.value = audio.currentTime;
+            timeDisplay.textContent = `${formatTime(audio.currentTime)} / ${formatTime(audio.duration)}`;
+        };
+
+        progress.oninput = function () {
+            audio.currentTime = progress.value;
+        };
+
+        function playpause() {
+            if (ctrlicon.classList.contains("fa-circle-pause")) {
+                audio.pause();
+                ctrlicon.classList.remove("fa-circle-pause");
+                ctrlicon.classList.add("fa-circle-play");
+            } else {
+                audio.play();
+                ctrlicon.classList.remove("fa-circle-play");
+                ctrlicon.classList.add("fa-circle-pause");
+            }
+        }
+
+        let backwardBtn = document.getElementById("backward");
+        let forwardBtn = document.getElementById("forward");
+
+        backwardBtn.addEventListener("click", () => {
+            audio.currentTime = Math.max(0, audio.currentTime - 5);
+            showSkipMessage(" Rewind 5s");
+        });
+
+        forwardBtn.addEventListener("click", () => {
+            audio.currentTime = Math.min(audio.duration, audio.currentTime + 5);
+            showSkipMessage(" Skipped 5s");
+        });
+
+        function showSkipMessage(text) {
+            const message = document.createElement("div");
+            message.textContent = text;
+            message.style.position = "absolute";
+            message.style.top = "50%";
+            message.style.left = "50%";
+            message.style.transform = "translate(-50%, -80%)";
+            message.style.padding = "10px 20px";
+            message.style.background = "rgba(0, 0, 0, 0.7)";
+            message.style.color = "#fff";
+            message.style.fontSize = "20px";
+            message.style.borderRadius = "10px";
+            message.style.zIndex = "1000";
+            message.style.transition = "opacity 0.3s ease";
+            message.style.opacity = "1";
+            document.body.appendChild(message);
+
+            setTimeout(() => {
+                message.style.opacity = "0";
+                setTimeout(() => {
+                    document.body.removeChild(message);
+                }, 300);
+            }, 800);
+        }
+    </script>
+</body>
+</html>
